@@ -1,6 +1,4 @@
-package full;
-
-import java.awt.*;
+package lab_1.full;
 
 class Line_2 {
     private Point_2 start;

@@ -29,4 +29,9 @@ class Point {
     public String toString() {
         return "Point(" + x + ", " + y + ")";
     }
+
+//    public double Rotate(double angle) {
+//
+//    }
+
 }

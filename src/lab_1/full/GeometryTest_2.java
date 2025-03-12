@@ -1,4 +1,4 @@
-package full;
+package lab_1.full;
 
 public class GeometryTest_2 {
     public static void main(String[] args) {

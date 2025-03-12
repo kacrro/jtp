@@ -1,4 +1,4 @@
-package full;
+package lab_1.full;
 
 class Point_2 {
     private double x, y;

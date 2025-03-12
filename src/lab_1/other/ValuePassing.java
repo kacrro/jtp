@@ -1,4 +1,4 @@
-package other;
+package lab_1.other;
 
 public class ValuePassing {
     public static int changei(int i) {
