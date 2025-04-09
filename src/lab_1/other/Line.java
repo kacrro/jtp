@@ -1,3 +1,4 @@
+package lab_1.other;
 
 // Klasa reprezentująca linię w przestrzeni dwuwymiarowej
 class Line {
@@ -39,6 +40,6 @@ class Line {
 
     // Metoda toString zgodnie z wymaganiami
     public String toString() {
-        return "Line[" + start.toString() + " -> " + end.toString() + "]";
+        return "lab_1.other.Line[" + start.toString() + " -> " + end.toString() + "]";
     }
 }

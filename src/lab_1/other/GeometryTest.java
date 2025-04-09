@@ -1,9 +1,10 @@
+package lab_1.other;
 
 // Klasa testowa
 public class GeometryTest {
     public static void main(String[] args) {
-        // Test klasy Point
-        System.out.println("Test klasy Point:");
+        // Test klasy lab_1.other.Point
+        System.out.println("Test klasy lab_1.other.Point:");
         Point p1 = new Point(2, 3);
         System.out.println("Utworzony punkt: " + p1);
 
@@ -13,8 +14,8 @@ public class GeometryTest {
         p1.flip();
         System.out.println("Po odbiciu względem początku układu: " + p1);
 
-        // Test klasy Line
-        System.out.println("\nTest klasy Line:");
+        // Test klasy lab_1.other.Line
+        System.out.println("\nTest klasy lab_1.other.Line:");
         Point p2 = new Point(1, 1);
         Point p3 = new Point(4, 5);
         Line line1 = new Line(p2, p3);

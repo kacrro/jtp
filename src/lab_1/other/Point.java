@@ -1,3 +1,5 @@
+package lab_1.other;
+
 class Point {
     private double x;
     private double y;
@@ -27,7 +29,7 @@ class Point {
 
     // Metoda toString zgodnie z wymaganiami
     public String toString() {
-        return "Point(" + x + ", " + y + ")";
+        return "lab_1.other.Point(" + x + ", " + y + ")";
     }
 
 //    public double Rotate(double angle) {
