@@ -1,4 +1,4 @@
-package lab_3.gen;
+package lab_3.bez_optym;
 
 //ostatni podpunkt zrobic w oddzielnej klasie ?
 //przynajmniej 2 testy dla kazdej metody

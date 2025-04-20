@@ -3,28 +3,20 @@ package lab_3;
 public class Element {
     private int val;
     private Element next;
+    private Element prev;    // ← dodatkowy wskaźnik do poprzednika
 
-    //konstruktor
     public Element(int val) {
-        this.val = val;
-        this.next = null; // wartość początkowa
+        this.val  = val;
+        this.next = null;
+        this.prev = null;
     }
 
-    //gettery
-    public int getVal() {
-        return val;
-    }
-    public Element getNext() {
-        return next;
-    }
+    public int getVal()             { return val; }
+    public void setVal(int val)     { this.val = val; }
 
-    //settery
-    public void setVal(int val) {
-        this.val = val;
-    }
-    public void setNext(Element next) {
-        this.next = next;
-    }
+    public Element getNext()        { return next; }
+    public void setNext(Element n)  { this.next = n; }
 
-
+    public Element getPrev()        { return prev; }
+    public void setPrev(Element p)  { this.prev = p; }
 }

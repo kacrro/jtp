@@ -1,4 +1,4 @@
-package lab_3.gen;
+package lab_3.bez_optym;
 
 public class IntegerList {
     public static void main(String[] args) {

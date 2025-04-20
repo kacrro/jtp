@@ -1,4 +1,4 @@
-package lab_3.gen;
+package lab_3.bez_optym;
 
 class Anchor {
     private Element first;

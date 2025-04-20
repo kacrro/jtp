@@ -1,98 +1,145 @@
 package lab_3;
 
 public class Anchor {
-    private Element first;
+    private Element first;   // początek listy
+    private Element last;    // koniec listy
+    private int     size;    // liczba elementów
 
     public Anchor() {
-        this.first = null;
+        this.first = this.last = null;
+        this.size  = 0;
     }
 
+    // ——— STAŁE CZASOWO (O(1)) ——————————
+
+    /** Zwraca true, gdy lista jest pusta. */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    /** Zwraca liczbę elementów. */
+    public int size() {
+        return size;
+    }
+
+    /** Pierwszy element (lub null). */
     public Element getFirst() {
         return first;
     }
 
-    public void setFirst(Element first) {
-        this.first = first;
+    /** Ostatni element (lub null). */
+    public Element getLast() {
+        return last;
     }
 
-    //metoda wstawiająca liczbę na początek listy
-    public void insertAtTheFront(int InsertedNumber) {
-        Element newElement = new Element(InsertedNumber);
-        newElement.setNext(first);
-        first = newElement;
-    }
-
-    //metoda wstawiająca liczbę na koniec listy
-    public void insertAtTheBack(int InsertedNumber) {
-        Element newElement = new Element(InsertedNumber);
-
+    /** Wstawia nowy element z wartością x na początek listy. */
+    public void insertAtTheFront(int x) {
+        Element e = new Element(x);
         if (first == null) {
-            first = newElement;
-            return;
+            first = last = e;
+        } else {
+            e.setNext(first);
+            first.setPrev(e);
+            first = e;
         }
-
-
-        //W przeciwnym przypadku przechodzimy do ostatniego elementu
-        Element current = first;
-        while (current.getNext() != null) {
-            current = current.getNext();
-        }
-
-        //Dołączamy nowy element na koncu listy
-        current.setNext(newElement);
+        size++;
     }
 
-    // metoda usuwajaca pierwszy element listy
-    public void removeFirst(){
-        if (first != null) {
+    /** Wstawia nowy element z wartością x na koniec listy. */
+    public void insertAtTheEnd(int x) {
+        Element e = new Element(x);
+        if (last == null) {
+            first = last = e;
+        } else {
+            last.setNext(e);
+            e.setPrev(last);
+            last = e;
+        }
+        size++;
+    }
+
+    /** Usuwa pierwszy element (jeśli istnieje). */
+    public void removeFirst() {
+        if (first == null) return;
+        if (first == last) {
+            first = last = null;
+        } else {
             first = first.getNext();
+            first.setPrev(null);
         }
+        size--;
     }
 
-    // metoda usuwajaca ostatni element listy
+    /** Usuwa ostatni element (jeśli istnieje). */
     public void removeLast() {
-    //jesli lista jest pusta
-        if (first == null) {
-            return;
+        if (last == null) return;
+        if (first == last) {
+            first = last = null;
+        } else {
+            last = last.getPrev();
+            last.setNext(null);
         }
-
-        // Jeśli lista ma tylko jeden element, ustawiamy first na null.
-        if (first.getNext() == null) {
-            first = null;
-            return;
-        }
-
-        // Znajdujemy przedostatni element.
-        Element current = first;
-        // Pętla zatrzyma się, gdy current będzie wskazywać na przedostatni element, czyli element, którego next ma ostatni element.
-        while (current.getNext().getNext() != null) {
-            current = current.getNext();
-        }
-        // Ustawiamy next przedostatniego elementu na null, przez co ostatni element zostaje usunięty.
-        current.setNext(null);
+        size--;
     }
 
+    // ——— LINIOWE (O(n)) ——————————
 
+    /**
+     * Zwraca nową listę-klon tej listy.
+     * Nie nadpisujemy Object.clone(), ale dajemy własną metodę.
+     */
+    public Anchor clone() {
+        Anchor c = new Anchor();
+        Element cur = first;
+        while (cur != null) {
+            c.insertAtTheEnd(cur.getVal());
+            cur = cur.getNext();
+        }
+        return c;
+    }
 
-    //Metoda zwracająca string reprezentujący daną listę.
+    /**
+     * Odwraca kolejność elementów "in place".
+     */
+    public void revert() {
+        Element cur = first;
+        while (cur != null) {
+            Element tmp = cur.getPrev();
+            cur.setPrev(cur.getNext());
+            cur.setNext(tmp);
+            cur = cur.getPrev();  // bo next/prev już zamienione
+        }
+        // Zamiana wskaźników first <-> last
+        Element tmp = first;
+        first = last;
+        last  = tmp;
+    }
+
     @Override
     public String toString() {
-        if (first == null) {
-            return "[]";
+        StringBuilder sb = new StringBuilder("[");
+        Element cur = first;
+        while (cur != null) {
+            sb.append(cur.getVal());
+            if (cur.getNext() != null) sb.append(", ");
+            cur = cur.getNext();
         }
+        sb.append("]");
+        return sb.toString();
+    }
 
-        StringBuilder builder = new StringBuilder("[");
-        Element current = first;
-
-        while (current != null) {
-            builder.append(current.getVal());
-            if (current.getNext() != null) {
-            builder.append(", ");
-            }
-
-            current = current.getNext();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Anchor)) return false;
+        Anchor other = (Anchor) o;
+        if (this.size != other.size) return false;
+        Element a = this.first, b = other.first;
+        while (a != null) {
+            if (a.getVal() != b.getVal()) return false;
+            a = a.getNext();
+            b = b.getNext();
         }
-        builder.append("]");
-        return builder.toString();
+        return true;
     }
 }
