@@ -22,9 +22,8 @@ class Point {
         this.y = -this.y;
     }
 
-    // Gettery i settery
+    // Gettery
     public double getX() {return x;}
-
     public double getY() {return y;}
 
     // Metoda toString zgodnie z wymaganiami
