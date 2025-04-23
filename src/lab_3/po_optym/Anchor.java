@@ -1,4 +1,4 @@
-package lab_3;
+package lab_3.po_optym;
 
 public class Anchor {
     private Element first;   // początek listy
@@ -86,7 +86,6 @@ public class Anchor {
 
     /**
      * Zwraca nową listę-klon tej listy.
-     * Nie nadpisujemy Object.clone(), ale dajemy własną metodę.
      */
     public Anchor clone() {
         Anchor c = new Anchor();

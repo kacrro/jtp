@@ -1,4 +1,4 @@
-package lab_3;
+package lab_3.po_optym;
 
 public class IntegerList {
     public static void main(String[] args) {

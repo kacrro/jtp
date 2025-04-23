@@ -1,9 +1,9 @@
-package lab_3;
+package lab_3.po_optym;
 
 public class Element {
     private int val;
     private Element next;
-    private Element prev;    // ← dodatkowy wskaźnik do poprzednika
+    private Element prev;    // dodatkowy wskaźnik do poprzednika
 
     public Element(int val) {
         this.val  = val;
