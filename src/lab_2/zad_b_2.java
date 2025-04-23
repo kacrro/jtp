@@ -51,7 +51,7 @@ public class zad_b_2 {
     }
 
 
-    //zwracanie main
+    //zwracanie Test
 
 
 }

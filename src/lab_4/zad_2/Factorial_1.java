@@ -43,7 +43,7 @@ public class Factorial_1 {
 *
 * */
 //4 zadanie
-/* 4) Przetestuj metodę factorial implementując metodę main tak zeby w main metoda factorial
+/* 4) Przetestuj metodę factorial implementując metodę Test tak zeby w Test metoda factorial
 *byla sprawdzana za jednym razem dla ciagu liczb od -3 do 5.
 */
 //5 zadanie
