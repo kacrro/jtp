@@ -1,0 +1,1 @@
+zrobic testy tak zeby bylo coverage 100%
