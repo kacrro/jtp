@@ -1,104 +1,82 @@
 package egzamin;
-
-// Plik: Main.java
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-class Data {
-    private int day, month, year;
-
-    public Data(int day, int month, int year) {
-        if (year < 0 || month < 1 || month > 12 || day < 1 || day > 30) {
-            throw new IllegalArgumentException(
-                    "Niepoprawna data: " + day + "/" + month + "/" + year);
-        }
-        this.day = day;
-        this.month = month;
-        this.year = year;
-    }
-
-    public int toDays() {
-        return year * 360 + (month - 1) * 30 + (day - 1);
-    }
-
-    @Override
-    public String toString() {
-        return day + "/" + month + "/" + year;
-    }
-}
-
-class Towar {
-    private String name;
-    private double price;
-    private Data expiryDate;
-
-    public Towar(String name, double price, Data expiryDate) {
-        this.name = name;
-        this.price = price;
-        this.expiryDate = expiryDate;
-    }
-
-    public int wazny(Data d) {
-        int diff = expiryDate.toDays() - d.toDays();
-        return diff < 0 ? -1 : diff;
-    }
-
-    @Override
-    public String toString() {
-        return name + " (cena: " + price + ", ważny do: " + expiryDate + ")";
-    }
-
-    public String getName() {
-        return name;
-    }
-}
-
-class Magazyn {
-    private List<Towar> towary = new ArrayList<>();
-
-    public void add(Towar t) {
-        towary.add(t);
-    }
-
-    public List<Towar> przeterminowane(Data d) {
-        List<Towar> wynik = new ArrayList<>();
-        for (Towar t : towary) {
-            if (t.wazny(d) == -1) {
-                wynik.add(t);
-            }
-        }
-        return wynik;
-    }
-}
+/**
+ * Jeden plik z klasami: Klub, Drużyna, Gracz.
+ * Zamiast własnego wyjątku używamy NoSuchElementException (unchecked).
+ */
 
 public class Main {
     public static void main(String[] args) {
-        Data today = new Data(15, 6, 2025);
+        Klub klub = new Klub("FC Example");
+        Drużyna a = new Drużyna("Drużyna A");
+        Drużyna b = new Drużyna("Drużyna B");
+        klub.getDrużyny().add(a);
+        klub.getDrużyny().add(b);
 
-        Towar mlek   = new Towar("Mleko", 2.50, new Data(10, 6, 2025));
-        Towar chleb  = new Towar("Chleb", 3.00, new Data(20, 6, 2025));
-        Towar ser    = new Towar("Ser",   5.00, new Data(1, 7, 2025));
+        Gracz jan = new Gracz("Jan", klub);
+        Gracz ola = new Gracz("Ola", klub);
 
-        List<Towar> all = List.of(mlek, chleb, ser);
+        // Jan należy do A i B, Ola do żadnej → rzuci wyjątek
+        System.out.println("Jan należy do: " + jan.nalezyDoDruzyn());
+        System.out.println("Ola należy do: " + ola.nalezyDoDruzyn());
+    }
+}
 
-        Magazyn mag = new Magazyn();
-        for (Towar t : all) {
-            mag.add(t);
-        }
+class Klub {
+    private String nazwa;
+    private List<Drużyna> drużyny = new ArrayList<>();
 
-        System.out.println("Dziś: " + today);
-        System.out.println("\nPrzeterminowane towaru:");
-        for (Towar t : mag.przeterminowane(today)) {
-            System.out.println("  " + t);
-        }
+    public Klub(String nazwa) {
+        this.nazwa = nazwa;
+    }
+    public String getNazwa()         { return nazwa; }
+    public List<Drużyna> getDrużyny(){ return drużyny; }
+    @Override public String toString(){ return nazwa; }
+}
 
-        System.out.println("\nPozostałe dni ważności:");
-        for (Towar t : all) {
-            int days = t.wazny(today);
-            if (days >= 0) {
-                System.out.printf("  %s: %d dni%n", t.getName(), days);
+class Drużyna {
+    private String nazwa;
+    private List<Gracz> gracze = new ArrayList<>();
+
+    public Drużyna(String nazwa) {
+        this.nazwa = nazwa;
+    }
+    public String getNazwa()        { return nazwa; }
+    public List<Gracz> getGracze()  { return gracze; }
+    @Override public String toString(){ return nazwa; }
+}
+
+class Gracz {
+    private String imię;
+    private Klub klub;
+
+    public Gracz(String imię, Klub klub) {
+        this.imię = imię;
+        this.klub = klub;
+    }
+
+    /**
+     * Zwraca listę drużyn, w których jest ten gracz.
+     * Jeśli nie należy do żadnej, rzuca NoSuchElementException.
+     */
+    public List<Drużyna> nalezyDoDruzyn() {
+        List<Drużyna> wynik = new ArrayList<>();
+        for (Drużyna d : klub.getDrużyny()) {
+            if (d.getGracze().contains(this)) {
+                wynik.add(d);
             }
         }
+        if (wynik.isEmpty()) {
+            throw new NoSuchElementException(
+                    imię + " nie należy do żadnej drużyny w klubie " + klub);
+        }
+        return wynik;
+    }
+
+    @Override public String toString() {
+        return imię;
     }
 }
